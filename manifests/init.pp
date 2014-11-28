@@ -51,6 +51,10 @@
 #   the init script.
 #   Default: undef.
 #
+# [*java_opts*]
+#   JAVA_OPTS used in the init script.
+#   Default: -Xmx256m.
+#
 # === Variables
 #
 # [*url*]
