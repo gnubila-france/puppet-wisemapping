@@ -96,8 +96,8 @@ class wisemapping (
   $java_opts = '-Xmx256m',
   $java_home = undef,
   $ssl = true,
-  $ssl_cert = "puppet:///modules/dist/site/certs/${::fqdn}.crt",
-  $ssl_key = "puppet:///modules/dist/site/certs/${::fqdn}.key",
+  $ssl_cert = "puppet:///modules/site/certs/${::fqdn}.crt",
+  $ssl_key = "puppet:///modules/site/certs/${::fqdn}.key",
 ) {
   $url = "${url_base}/wisemapping-v${version}.zip"
   $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
