@@ -15,9 +15,9 @@
 JAVA_OPTS="<%= @java_opts %>"
 # ' inside " are required to avoir troubles when launched using su -
 <% if @java_home -%>
-START_CMD="'export JAVA_HOME=$JAVA_HOME ; java $JAVA_OPTS -Dorg.apache.jasper.compiler.disablejsr199=true -jar <%= @wisemapping_dir %>/start.jar'"
+START_CMD="'export JAVA_HOME=$JAVA_HOME ; java $JAVA_OPTS -Dorg.apache.jasper.compiler.disablejsr199=true -jar <%= @wisemapping_dir %>/start.jar 2>&1 &'"
 <% else -%>
-START_CMD="'java $JAVA_OPTS -Dorg.apache.jasper.compiler.disablejsr199=true -jar <%= @wisemapping_dir %>/start.jar'"
+START_CMD="'java $JAVA_OPTS -Dorg.apache.jasper.compiler.disablejsr199=true -jar <%= @wisemapping_dir %>/start.jar 2>&1 &'"
 <% end -%>
 NAME="wisemapping"
 PGREP_STRING="<%= @wisemapping_dir %>/start.jar"
