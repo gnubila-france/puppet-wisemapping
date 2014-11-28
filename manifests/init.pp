@@ -34,6 +34,7 @@ class wisemapping (
 
   include ::java
   include ::mysql
+  include ::nginx
 
   $manage_file_source = $wisemapping::init_script_source ? {
     ''        => undef,
@@ -116,6 +117,15 @@ class wisemapping (
     hasrestart => true,
     hasstatus  => true,
     require    => File['/etc/init.d/wisemapping'],
+  }
+
+  nginx::resource::upstream { 'wisemapping_app':
+    members => [
+      'localhost:8080',
+      ],
+  }
+  nginx::resource::vhost { $::fqdn:
+      proxy => 'http://wisemapping_app',
   }
 }
 
