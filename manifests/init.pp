@@ -153,6 +153,7 @@ class wisemapping (
       'set database.validation.enabled true',
       'set database.validation.query SELECT 1',
     ],
+    notify  => Service['wisemapping'],
     require => [
       Puppi::Netinstall["netinstall_wisemapping_${version}"],
       Mysql::Grant["${db_user}@${db_host}-${db_name}"],
@@ -169,8 +170,8 @@ class wisemapping (
     require => Puppi::Netinstall["netinstall_wisemapping_${version}"],
   }
   service { 'wisemapping':
-    ensure     => 'stopped',
-    enable     => false,
+    ensure     => 'running',
+    enable     => true,
     hasrestart => true,
     hasstatus  => true,
     require    => File['/etc/init.d/wisemapping'],
