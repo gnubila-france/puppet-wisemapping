@@ -85,7 +85,7 @@ class wisemapping (
   $db_password = 'wisemapping',
   $init_script_template = 'wisemapping/wisemapping.init.erb',
   $init_script_source = undef,
-  $java_opts = '-Xmx256',
+  $java_opts = '-Xmx256m',
 ) {
   $url = "${url_base}/wisemapping-v${version}.zip"
   $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
