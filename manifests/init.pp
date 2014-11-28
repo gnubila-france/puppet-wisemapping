@@ -55,6 +55,10 @@
 #   JAVA_OPTS used in the init script.
 #   Default: -Xmx256m.
 #
+# [*java_home*]
+#   If set to a dir, JAVA_HOME will be exported.
+#   Default: undef.
+#
 # === Variables
 #
 # [*url*]
@@ -90,7 +94,7 @@ class wisemapping (
   $init_script_template = 'wisemapping/wisemapping.init.erb',
   $init_script_source = undef,
   $java_opts = '-Xmx256m',
-  $java_home = '',
+  $java_home = undef,
 ) {
   $url = "${url_base}/wisemapping-v${version}.zip"
   $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
