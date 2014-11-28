@@ -14,9 +14,9 @@
 ### Fill in these bits:
 JAVA_OPTS="<%= @java_opts %>"
 JAVA_HOME=""
-START_CMD="java $JAVA_OPTS -Dorg.apache.jasper.compiler.disablejsr199=true -jar /opt/wisemapping/start.jar"
+START_CMD="java $JAVA_OPTS -Dorg.apache.jasper.compiler.disablejsr199=true -jar <%= @wisemapping_dir %>/start.jar"
 NAME="wisemapping"
-PGREP_STRING="/opt/wisemapping/start.jar"
+PGREP_STRING="<%= @wisemapping_dir %>/start.jar"
 PID_FILE="/var/run/wisemapping.pid"
 USER="wisemapping"
 
