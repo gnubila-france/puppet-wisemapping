@@ -201,6 +201,15 @@ class wisemapping (
     ssl_cert => $ssl_cert,
     ssl_key  => $ssl_key,
   }
+
+  # Move wisemapping to the ROOT context
+  augeas { 'move_wisemapping_to_root_context':
+    lens    => 'Xml.lns',
+    incl    => "${wisemapping_dir}/contexts/wisemapping.xml",
+    changes => [
+      'set Set[name=contextPath]/#text /',
+    ],
+  }
 }
 
 # vim: set et sta sw=2 ts=2 sts=2 noci noai:
