@@ -4,9 +4,66 @@
 #
 # http://www.wisemapping.com/
 #
+# === Parameters
+#
+# [*version*]
+#   Wisemapping version.
+#   Default: 3.0.4.
+#
+# [*user*]
+#   User running wisemapping service.
+#   Default: wisemapping.
+#
+# [*group*]
+#   Group running wisemapping service.
+#   Default: wisemapping.
+#
+# [*install_dir*]
+#   Installation root directory.
+#   Default: /opt
+#
+# [*url_base*]
+#   Base URL use to compute downlaod URL.
+#   Default: https://bitbucket.org/wisemapping/wisemapping-open-source/downloads
+#
+# [*db_host*]
+#   Host running the database.
+#   Default: localhost
+#
+# [*db_name*]
+#   Name of the database.
+#   Default: wisemapping
+#
+# [*db_user*]
+#   Username for database connection.
+#   Default: wisemapping
+#
+# [*db_password*]
+#   Password for database connection.
+#   Default: wisemapping
+#
+# [*init_script_template*]
+#   Template of the init script.
+#   Default: wisemapping/wisemapping.init.erb
+#
+# [*init_script_source*]
+#   Name of the file to parse using template() to provide the content of
+#   the init script.
+#   Default: undef.
+#
+# === Variables
+#
+# [*url*]
+#   Wisemapping download URL.
+#
+# [*wisemapping_dir*]
+#   Full path to wisemapping installation dir.
+#
 # === Examples
 #
-#  include wisemapping
+#  include ::wisemapping
+#
+# Configure parameters using Hiera.
 #
 # === Authors
 #
