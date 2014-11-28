@@ -13,7 +13,7 @@
 
 ### Fill in these bits:
 JAVA_OPTS="<%= @java_opts %>"
-# ' inside " are required to avoir troubles when launched using su -
+# ' inside " are required to avoid troubles when launched using su -
 <% if @java_home -%>
 START_CMD="'export JAVA_HOME=$JAVA_HOME ; java $JAVA_OPTS -Dorg.apache.jasper.compiler.disablejsr199=true -jar <%= @wisemapping_dir %>/start.jar 2>&1 &'"
 <% else -%>
