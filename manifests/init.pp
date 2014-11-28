@@ -95,6 +95,9 @@ class wisemapping (
   $init_script_source = undef,
   $java_opts = '-Xmx256m',
   $java_home = undef,
+  $ssl = true,
+  $ssl_cert = "dist/site/certs/${::fqdn}.crt",
+  $ssl_key = "dist/site/certs/${::fqdn}.key",
 ) {
   $url = "${url_base}/wisemapping-v${version}.zip"
   $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
@@ -193,7 +196,10 @@ class wisemapping (
       ],
   }
   nginx::resource::vhost { $::fqdn:
-      proxy => 'http://wisemapping_app',
+    proxy    => 'http://wisemapping_app',
+    ssl      => $ssl,
+    ssl_cert => $ssl_cert,
+    ssl_key  => $ssl_key,
   }
 }
 
