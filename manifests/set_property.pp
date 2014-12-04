@@ -56,7 +56,7 @@ define wisemapping::set_property (
     lens    => 'Properties.lns',
     incl    => $file,
     changes => [
-      "set ${property} ${value}",
+      "set ${property} '${value}'",
     ],
     notify  => $notifications,
     require => $requirements,
