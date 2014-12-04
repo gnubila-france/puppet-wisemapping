@@ -127,7 +127,7 @@
 #   LDAP Attribute used as last name.
 #   default: 'sn'
 #
-# [*security_ldap_firsname_attribute*]
+# [*security_ldap_firstname_attribute*]
 #   LDAP Attribute used as first name.
 #   default: 'givenName'
 #
@@ -410,9 +410,9 @@ class wisemapping (
     property => 'security.ldap.lastName.attribute',
     value    => $security_ldap_lastname_attribute,
   }
-  wisemapping::set_property { 'set security_ldap_firsname_attribute':
+  wisemapping::set_property { 'set security_ldap_firstname_attribute':
     property => 'security.ldap.firstName.attribute',
-    value    => $security_ldap_firsname_attribute,
+    value    => $security_ldap_firstname_attribute,
   }
   wisemapping::set_property { 'set security_openid_enabled':
     property => 'security.openid.enabled',
