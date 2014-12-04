@@ -332,7 +332,7 @@ class wisemapping (
   # Configure Wisemapping using app.properties
   wisemapping::set_property { 'set site_baseurl':
     property     => 'site.baseurl',
-    value        => "https://${::fqdn}"
+    value        => "https://${::fqdn}",
     requirements => [
       Puppi::Netinstall["netinstall_wisemapping_${version}"],
       Augeas['move_wisemapping_to_root_context'],
