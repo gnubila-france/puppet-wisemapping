@@ -313,11 +313,18 @@ class wisemapping (
       'localhost:8080',
       ],
   }
+  # Proxy to local jetty and serve assets using nginx.
   nginx::resource::vhost { $::fqdn:
     proxy    => 'http://wisemapping_app',
     ssl      => $ssl,
     ssl_cert => $ssl_cert,
     ssl_key  => $ssl_key,
+    raw_append => [
+      "location /js { root ${wisemapping_dir}/webapps/wisemapping/js; }",
+      "location /css { root ${wisemapping_dir}/webapps/wisemapping/css; }",
+      "location /images { root ${wisemapping_dir}/webapps/wisemapping/images; }",
+      "location /icons { root ${wisemapping_dir}/webapps/wisemapping/icons; }",
+    ],
   }
 
   # Move wisemapping to the ROOT context
