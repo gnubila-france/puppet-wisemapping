@@ -282,7 +282,7 @@ class wisemapping (
       "set database.username ${db_user}",
       "set database.password ${db_password}",
       'set database.validation.enabled true',
-      'set database.validation.query SELECT 1',
+      'set database.validation.query "SELECT 1"',
     ],
     notify  => Service['wisemapping'],
     require => [
