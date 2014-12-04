@@ -222,7 +222,6 @@ class wisemapping (
       Augeas['move_wisemapping_to_root_context'],
     ],
   }
-
 }
 
 # vim: set et sta sw=2 ts=2 sts=2 noci noai:
