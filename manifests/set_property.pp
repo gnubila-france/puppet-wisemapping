@@ -16,7 +16,7 @@
 #
 # [*requirements*]
 #   Resource(s) to require. Can be an array.
-#   Default: Puppi::Netinstall["netinstall_wisemapping_${version}"]
+#   Default: Puppi::Netinstall["netinstall_wisemapping_${wisemapping::version}"]
 #
 # [*value*]
 #   Value of the property.
@@ -46,7 +46,7 @@ define wisemapping::set_property (
   $property = undef,
   $value = undef,
   $notifications = Service['wisemapping'],
-  $requirements = Puppi::Netinstall["netinstall_wisemapping_${version}"],
+  $requirements = Puppi::Netinstall["netinstall_wisemapping_${wisemapping::version}"],
 ) {
   validate_string($file)
   validate_string($property)
