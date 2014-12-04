@@ -207,7 +207,7 @@ class wisemapping (
     lens    => 'Xml.lns',
     incl    => "${wisemapping_dir}/contexts/wisemapping.xml",
     changes => [
-      'set Configure/Set[#attribute/name=contextPath]/#text /',
+      'set Configure/Set[#attribute/name=\'contextPath\']/#text /',
     ],
   }
 }
