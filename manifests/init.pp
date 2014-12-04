@@ -203,12 +203,11 @@ class wisemapping (
   }
 
   # Move wisemapping to the ROOT context
-  # FIXME not yet working
   augeas { 'move_wisemapping_to_root_context':
     lens    => 'Xml.lns',
     incl    => "${wisemapping_dir}/contexts/wisemapping.xml",
     changes => [
-      'set Set[#attribute/name=contextPath]/#text /',
+      'set Configure/Set[#attribute/name=contextPath]/#text /',
     ],
   }
 }
