@@ -446,6 +446,7 @@ class wisemapping (
       changes => [
         'set beans/bean[#attribute/id=\'contextSource\']/property[#name=\'authenticationStrategy\']/bean[#attribute/class=\'org.springframework.ldap.core.support.DefaultTlsDirContextAuthenticationStrategy\']',
       ],
+      notify => Service['wisemapping'],
     }
   }
 }
