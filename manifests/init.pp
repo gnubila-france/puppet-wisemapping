@@ -97,6 +97,12 @@
 #     security.ldap.* must be configured.
 #   Default: 'db'
 #
+# [*security_ldap_server_enable_tls*]
+#   Enable TLS for LDAP server connection.
+#   Certificate should be present in the JVM keystore, or a separate
+#   keystore has to be configured.
+#   Default: false
+#
 # [*security_ldap_server*]
 #   LDAP server to use for authentication.
 #   Default: 'ldap://localhost:389'
@@ -199,6 +205,7 @@ class wisemapping (
   $google_ads_enabled = 'false',
   $admin_user = 'admin@wisemapping.org',
   $security_type = 'db',
+  $security_ldap_server_enable_tls = false,
   $security_ldap_server = 'ldap://localhost:389',
   $security_ldap_server_user = 'cn=pveiga,dc=wisemapping,dc=com',
   $security_ldap_server_password = 'password',
@@ -429,6 +436,17 @@ class wisemapping (
   wisemapping::set_property { 'set documentation_service_basepath':
     property => 'documentation.services.basePath',
     value    => $documentation_service_basepath,
+  }
+
+  if $security_ldap_server_enable_tls {
+    # Enable TLS for LDAP connection
+    augeas { 'enable_tls_for_ldap_connetion':
+      lens    => 'Xml.lns',
+      incl    => "${wisemapping_dir}/webapps/wisemapping/WEB-INF/wisemapping-security-ldap.xml",
+      changes => [
+        'set beans/bean[#attribute/id=\'contextSource\']/property[#name=\'authenticationStrategy\']/bean[#attribute/class=\'org.springframework.ldap.core.support.DefaultTlsDirContextAuthenticationStrategy\']',
+      ],
+    }
   }
 }
 
