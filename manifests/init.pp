@@ -440,13 +440,15 @@ class wisemapping (
 
   if $security_ldap_server_enable_tls {
     # Enable TLS for LDAP connection
+    # XXX check how to do this more clearly/cleanly
     augeas { 'enable_tls_for_ldap_connetion':
       lens    => 'Xml.lns',
       incl    => "${wisemapping_dir}/webapps/wisemapping/WEB-INF/wisemapping-security-ldap.xml",
       changes => [
-        'set beans/bean[#attribute/id=\'contextSource\']/property[#name=\'authenticationStrategy\']/bean[#attribute/class=\'org.springframework.ldap.core.support.DefaultTlsDirContextAuthenticationStrategy\']',
+        'set beans/bean[#attribute/id=\'contextSource\']/property[#attribute/id=\'new\']/#attribute/name authenticationStrategy',
+        'set beans/bean[#attribute/id=\'contextSource\']/property[#attribute/name=\'authenticationStrategy\']/bean/#attribute/class org.springframework.ldap.core.support.DefaultTlsDirContextAuthenticationStrategy',
       ],
-      notify => Service['wisemapping'],
+      notify  => Service['wisemapping'],
     }
   }
 }
