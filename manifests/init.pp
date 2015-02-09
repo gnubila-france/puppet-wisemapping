@@ -221,6 +221,8 @@ class wisemapping (
   $java_opts = '-Xmx256m',
   $java_home = undef,
   $ssl = true,
+  # XXX With nginx the .crt should contain the server and the CA certificates
+  # https://www.startssl.com/?app=42
   $ssl_cert = "puppet:///modules/site/certs/${::fqdn}.crt",
   $ssl_key = "puppet:///modules/site/certs/${::fqdn}.key",
 ) {
