@@ -445,8 +445,8 @@ class wisemapping (
       lens    => 'Xml.lns',
       incl    => "${wisemapping_dir}/webapps/wisemapping/WEB-INF/wisemapping-security-ldap.xml",
       changes => [
-        'set beans/bean[#attribute/id=\'contextSource\']/property[#attribute/name="authenticationStrategy"]/#attribute/name authenticationStrategy',
-        'set beans/bean[#attribute/id=\'contextSource\']/property[#attribute/name="authenticationStrategy"]/bean/#attribute/class org.springframework.ldap.core.support.DefaultTlsDirContextAuthenticationStrategy',
+        'set beans/bean[#attribute/id="contextSource"]/property[#attribute/name="authenticationStrategy"]/#attribute/name authenticationStrategy',
+        'set beans/bean[#attribute/id="contextSource"]/property[#attribute/name="authenticationStrategy"]/bean/#attribute/class org.springframework.ldap.core.support.DefaultTlsDirContextAuthenticationStrategy',
       ],
       notify  => Service['wisemapping'],
     }
