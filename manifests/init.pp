@@ -8,7 +8,7 @@
 #
 # [*version*]
 #   Wisemapping version.
-#   Default: 3.0.4.
+#   Default: 4.0.0.
 #
 # [*user*]
 #   User running wisemapping service.
@@ -185,7 +185,7 @@
 # Copyright 2014 gńubila
 #
 class wisemapping (
-  $version = '3.0.4',
+  $version = '4.0.0',
   $user = 'wisemapping',
   $group = 'wisemapping',
   $install_dir = '/opt',
