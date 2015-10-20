@@ -4,11 +4,17 @@
 #
 # http://www.wisemapping.com/
 #
+# When using LDAP authentication, all users found are allowed.
+# It should be possible to edit the ldaUserSearch filter in the
+# wisemapping-security-ldap.xml file. The second parameter is the LDAP
+# search filter.
+# http://docs.spring.io/spring-security/site/apidocs/org/springframework/security/ldap/search/FilterBasedLdapUserSearch.html
+#
 # === Parameters
 #
 # [*version*]
 #   Wisemapping version.
-#   Default: 3.0.4.
+#   Default: 4.0.0.
 #
 # [*user*]
 #   User running wisemapping service.
@@ -185,7 +191,7 @@
 # Copyright 2014 gńubila
 #
 class wisemapping (
-  $version = '3.0.4',
+  $version = '4.0.0',
   $user = 'wisemapping',
   $group = 'wisemapping',
   $install_dir = '/opt',
@@ -343,7 +349,7 @@ class wisemapping (
     lens    => 'Xml.lns',
     incl    => "${wisemapping_dir}/contexts/wisemapping.xml",
     changes => [
-      'set Configure/Set[#attribute/name=\'contextPath\']/#text /',
+      'set Configure/Set[#attribute/name="contextPath"]/#text /',
     ],
   }
 
