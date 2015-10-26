@@ -191,7 +191,7 @@
 # Copyright 2014 gńubila
 #
 class wisemapping (
-  $version = '4.0.0',
+  $version = '4.0.2',
   $user = 'wisemapping',
   $group = 'wisemapping',
   $install_dir = '/opt',
@@ -236,7 +236,7 @@ class wisemapping (
   $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
 
   include ::java
-  include ::mysql
+  include ::mysql::server
   include ::nginx
 
   $manage_file_source = $wisemapping::init_script_source ? {
@@ -276,14 +276,12 @@ class wisemapping (
     ],
   }
 
-  mysql::grant { "${db_user}@${db_host}-${db_name}":
-    mysql_privileges         => 'ALL',
-    mysql_password           => $db_password,
-    mysql_db                 => $db_name,
-    mysql_user               => $db_user,
-    mysql_host               => $db_host,
-    mysql_db_init_query_file => "${wisemapping_dir}/config/database/mysql/create-schemas.sql",
-    require                  => Puppi::Netinstall["netinstall_wisemapping_${version}"],
+  mysql::db { $db_name:
+    user     => $db_user,
+    password => $db_password,
+    host     => $db_host,
+    sql      => "${wisemapping_dir}/config/database/mysql/create-schemas.sql",
+    require  => Puppi::Netinstall["netinstall_wisemapping_${version}"],
   }
 
   # Enable MySQL DB backend instead of default HSQLDB
@@ -302,7 +300,7 @@ class wisemapping (
     notify  => Service['wisemapping'],
     require => [
       Puppi::Netinstall["netinstall_wisemapping_${version}"],
-      Mysql::Grant["${db_user}@${db_host}-${db_name}"],
+      Mysql::Db[$db_name],
     ],
   }
 
@@ -323,6 +321,22 @@ class wisemapping (
     require    => File['/etc/init.d/wisemapping'],
   }
 
+  file { "/etc/nginx/${::fqdn}.key":
+    ensure  => 'file',
+    owner   => 'nginx',
+    group   => 'root',
+    mode    => '0640',
+    source  => $ssl_key,
+    require => Class['nginx']
+  }
+  file { "/etc/nginx/${::fqdn}.crt":
+    ensure  => 'file',
+    owner   => 'nginx',
+    group   => 'root',
+    mode    => '0644',
+    source  => $ssl_cert,
+    require => File["/etc/nginx/${::fqdn}.key"],
+  }
   nginx::resource::upstream { 'wisemapping_app':
     members => [
       'localhost:8080',
@@ -334,8 +348,8 @@ class wisemapping (
     proxy            => 'http://wisemapping_app',
     ssl              => $ssl,
     rewrite_to_https => $ssl,
-    ssl_cert         => $ssl_cert,
-    ssl_key          => $ssl_key,
+    ssl_cert         => "/etc/nginx/${::fqdn}.crt",
+    ssl_key          => "/etc/nginx/${::fqdn}.key",
 #    raw_append      => [
 #      "location /js { root ${wisemapping_dir}/webapps/wisemapping/js; }",
 #      "location /css { root ${wisemapping_dir}/webapps/wisemapping/css; }",
