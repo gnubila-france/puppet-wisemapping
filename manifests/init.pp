@@ -236,7 +236,7 @@ class wisemapping (
   $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
 
   include ::java
-  include ::mysql
+  include ::mysql::server
   include ::nginx
 
   $manage_file_source = $wisemapping::init_script_source ? {
@@ -276,14 +276,12 @@ class wisemapping (
     ],
   }
 
-  mysql::grant { "${db_user}@${db_host}-${db_name}":
-    mysql_privileges         => 'ALL',
-    mysql_password           => $db_password,
-    mysql_db                 => $db_name,
-    mysql_user               => $db_user,
-    mysql_host               => $db_host,
-    mysql_db_init_query_file => "${wisemapping_dir}/config/database/mysql/create-schemas.sql",
-    require                  => Puppi::Netinstall["netinstall_wisemapping_${version}"],
+  mysql::db { $db_name:
+    user     => $db_user,
+    password => $db_password,
+    host     => $db_host,
+    sql      => "${wisemapping_dir}/config/database/mysql/create-schemas.sql",
+    require  => Puppi::Netinstall["netinstall_wisemapping_${version}"],
   }
 
   # Enable MySQL DB backend instead of default HSQLDB
@@ -302,7 +300,7 @@ class wisemapping (
     notify  => Service['wisemapping'],
     require => [
       Puppi::Netinstall["netinstall_wisemapping_${version}"],
-      Mysql::Grant["${db_user}@${db_host}-${db_name}"],
+      Mysql::Db[$db_name],
     ],
   }
 
