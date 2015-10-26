@@ -191,7 +191,7 @@
 # Copyright 2014 gńubila
 #
 class wisemapping (
-  $version = '4.0.0',
+  $version = '4.0.2',
   $user = 'wisemapping',
   $group = 'wisemapping',
   $install_dir = '/opt',
