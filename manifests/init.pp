@@ -69,7 +69,7 @@
 #
 # [*google_recaptcha_enabled*]
 #   Enable captcha confirmation.
-#   Default: 'true'
+#   Default: true
 #
 # [*google_recaptcha_privatekey*]
 #   Private ReCaptcha key. See //www.google.com/recaptcha
@@ -81,7 +81,7 @@
 #
 # [*google_analytics_enabled*]
 #   Enable Google Analytics.
-#   Default: 'false'
+#   Default: false
 #
 # [*google_analytics_account*]
 #   Google Analytics account
@@ -89,7 +89,7 @@
 #
 # [*google_ads_enabled*]
 #   Enable Google Ads.
-#   Default: 'false'
+#   Default: false
 #
 # [*admin_user*]
 #   Site administration user. This user will have special permissions
@@ -202,13 +202,13 @@ class wisemapping (
   $db_password = 'wisemapping',
   $server_send_email = 'root@localhost',
   $support_email = 'root@localhost',
-  $error_reporter_email = '',
-  $google_recaptcha_enabled = 'true',
+  $error_reporter_email = 'root@localhost',
+  $google_recaptcha_enabled = true,
   $google_recaptcha_privatekey = '6LeQ4tISAAAAAMfHMPRKyHupTfA-KE4QeTCnLXhK',
   $google_recaptcha_publickey = '6LeQ4tISAAAAALzCGKNgRv8UqsDx7Cb0vq4wbJBr',
-  $google_analytics_enabled = 'false',
+  $google_analytics_enabled = false,
   $google_analytics_account = 'UA-XXXX',
-  $google_ads_enabled = 'false',
+  $google_ads_enabled = false,
   $admin_user = 'admin@wisemapping.org',
   $security_type = 'db',
   $security_ldap_server_enable_tls = false,
@@ -220,7 +220,7 @@ class wisemapping (
   $security_ldap_auth_attribute = 'mail',
   $security_ldap_lastname_attribute = 'sn',
   $security_ldap_firstname_attribute = 'givenName',
-  $security_openid_enabled = 'false',
+  $security_openid_enabled = false,
   $documentation_service_basepath = "https://${::fqdn}/service",
   $init_script_template = 'wisemapping/wisemapping.init.erb',
   $init_script_source = undef,
@@ -232,12 +232,54 @@ class wisemapping (
   $ssl_cert = "puppet:///modules/site/certs/${::fqdn}.crt",
   $ssl_key = "puppet:///modules/site/certs/${::fqdn}.key",
 ) {
-  $url = "${url_base}/wisemapping-v${version}.zip"
-  $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
+  validate_string($version)
+  validate_string($user)
+  validate_string($group)
+  validate_absolute_path($install_dir)
+  validate_string($url_base)
+  validate_string($db_host)
+  validate_string($db_name)
+  validate_string($db_user)
+  validate_string($db_password)
+  validate_string($server_send_email)
+  validate_string($support_email)
+  validate_string($error_reporter_email)
+  validate_bool($google_recaptcha_enabled)
+  validate_string($google_recaptcha_privatekey)
+  validate_string($google_recaptcha_publickey)
+  validate_bool($google_analytics_enabled)
+  validate_string($google_analytics_account)
+  validate_bool($google_ads_enabled)
+  validate_string($admin_user)
+  validate_string($security_type)
+  validate_bool($security_ldap_server_enable_tls)
+  validate_string($security_ldap_server)
+  validate_string($security_ldap_server_user)
+  validate_string($security_ldap_server_password)
+  validate_string($security_ldap_basedn)
+  validate_string($security_ldap_subdn)
+  validate_string($security_ldap_auth_attribute)
+  validate_string($security_ldap_lastname_attribute)
+  validate_string($security_ldap_firstname_attribute)
+  validate_bool($security_openid_enabled)
+  validate_string($documentation_service_basepath)
+  validate_string($init_script_template)
+  validate_string($java_opts)
+  validate_bool($ssl)
+  validate_string($ssl_cert)
+  validate_string($ssl_key)
 
   include ::java
   include ::mysql::server
   include ::nginx
+
+  $real_google_recaptcha_enabled = bool2str($google_recaptcha_enabled)
+  $real_google_analytics_enabled = bool2str($google_analytics_enabled)
+  $real_google_ads_enabled = bool2str($google_ads_enabled)
+  $real_security_openid_enabled = bool2str($security_openid_enabled)
+
+  $url = "${url_base}/wisemapping-v${version}.zip"
+  $wisemapping_dir = "${install_dir}/wisemapping-v${version}"
 
   $manage_file_source = $wisemapping::init_script_source ? {
     ''        => undef,
@@ -390,7 +432,7 @@ class wisemapping (
   }
   wisemapping::set_property { 'set google_recaptcha_enabled':
     property => 'google.recaptcha.enabled',
-    value    => $google_recaptcha_enabled,
+    value    => $real_google_recaptcha_enabled,
   }
   wisemapping::set_property { 'set google_recaptcha_privatekey':
     property => 'google.recaptcha.privateKey',
@@ -402,7 +444,7 @@ class wisemapping (
   }
   wisemapping::set_property { 'set google_analytics_enabled':
     property => 'google.analytics.enabled',
-    value    => $google_analytics_enabled,
+    value    => $real_google_analytics_enabled,
   }
   wisemapping::set_property { 'set google_analytics_account':
     property => 'google.analytics.account',
@@ -410,7 +452,7 @@ class wisemapping (
   }
   wisemapping::set_property { 'set google_ads_enabled':
     property => 'google.ads.enabled',
-    value    => $google_ads_enabled,
+    value    => $real_google_ads_enabled,
   }
   wisemapping::set_property { 'set admin_user':
     property => 'admin.user',
@@ -454,7 +496,7 @@ class wisemapping (
   }
   wisemapping::set_property { 'set security_openid_enabled':
     property => 'security.openid.enabled',
-    value    => $security_openid_enabled,
+    value    => $real_security_openid_enabled,
   }
   wisemapping::set_property { 'set documentation_service_basepath':
     property => 'documentation.services.basePath',
