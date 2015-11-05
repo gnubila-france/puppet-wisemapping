@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "author": "Baptiste Grenier",
   "summary": "A module for installing wisemapping",
-  "license": "Licensed under (MIT)",
+  "license": "MIT",
   "source": "https://github.com/gnubila-france/puppet-wisemapping",
   "project_page": "https://forge.puppetlabs.com/gnubilafrance/wisemapping",
   "issues_url": "https://github.com/gnubila-france/puppet-wisemapping/issues",
