@@ -25,6 +25,6 @@
     { "name": "example42/puppi", "version_requirement": ">= 2.0.0" },
     { "name": "puppetlabs/mysql", "version_requirement": ">= 3.0.0" },
     { "name": "example42/java", "version_requirement": ">= 2.0.1" },
-    { "name": "jfryman/nginx", "version_requirement": ">= 0.2.0" }
+    { "name": "jfryman/nginx", "version_requirement": ">= 0.6.0" }
   ]
 }

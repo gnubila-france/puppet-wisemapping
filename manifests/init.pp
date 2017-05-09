@@ -386,10 +386,10 @@ class wisemapping (
   }
   # Proxy to local jetty and serve assets using nginx.
   # XXX debug/re-enable service of assets using nginx.
-  nginx::resource::vhost { $::fqdn:
+  nginx::resource::server { $::fqdn:
     proxy            => 'http://wisemapping_app',
     ssl              => $ssl,
-    rewrite_to_https => $ssl,
+    ssl_redirect     => $ssl,
     ssl_cert         => "/etc/nginx/${::fqdn}.crt",
     ssl_key          => "/etc/nginx/${::fqdn}.key",
 #    raw_append      => [
